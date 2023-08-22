@@ -1,0 +1,20 @@
+spring:
+  mvc:
+    view:
+      prefix: /WEB-INF/views/
+      suffix: .jsp
+  jpa:
+    show-sql: true
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+    hibernate:
+       ddl-auto: validate
+  datasource:
+    url: jdbc:postgresql://localhost:5432/hangman_game
+    username: postgres 
+    password: password
+    initialize: false   
+  flyway:
+    enabled: true
+    schemas: schema
+    user: postgres
+    password: password
