@@ -2,17 +2,11 @@ package bg.proxiad.demo.hangman.model;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import jakarta.persistence.*;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.EnableLoadTimeWeaving;
 import org.springframework.data.annotation.AccessType;
-import jakarta.persistence.CollectionTable;
-import jakarta.persistence.ElementCollection;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToMany;
-import jakarta.persistence.ManyToOne;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -28,13 +22,22 @@ public class Stats {
   @Setter(AccessLevel.NONE)
   private Long id;
 
+  @Value("${game.lives-per-game}")
   private int livesRemaining;
 
   @ManyToOne
   @JoinColumn(name = "ranking_id", nullable = false)
   private Ranking ranking;
 
+  @OneToOne(mappedBy = "stats")
+  private Game game;
+
   @ElementCollection
   @CollectionTable(name = "input_history")
   List<Character> inputHistory = new ArrayList<>();
+
+  public void addCharacterPlaced(Character characterPlaced){
+    inputHistory.add(characterPlaced);
+  }
+
 }

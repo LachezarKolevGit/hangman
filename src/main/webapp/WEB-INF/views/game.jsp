@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
-<!DOCTYPE html>
+<%@ taglib uri="jakarta.tags.core" prefix="c" %>
 <html>
 <head>
 <meta charset="ISO-8859-1">
@@ -11,5 +11,11 @@
 <p>Start new game</p>
 <p>Continue game</p>
 <p>See stats</p>
+
+<c:forEach items="${list}" var="list">
+<tr>
+    <td>${list}</td>
+</tr>
+</c:forEach>
 </body>
 </html>

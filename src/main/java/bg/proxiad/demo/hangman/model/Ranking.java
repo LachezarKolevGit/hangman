@@ -2,15 +2,8 @@ package bg.proxiad.demo.hangman.model;
 
 import java.util.ArrayList;
 import java.util.List;
-import jakarta.persistence.Entity;
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.OneToMany;
-import jakarta.persistence.OneToOne;
+
+import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -36,6 +29,17 @@ public class Ranking {
 
   @OneToMany(mappedBy = "ranking")
   private List<Stats> stats = new ArrayList<>();
+
+  public Ranking(Rank rank) {
+    this.rank = rank;
+    player = null;
+  }
+
+  public Ranking(Player player, Rank rank) {
+    this.player = player;
+    player.setRanking(this);
+    this.rank = rank;
+  }
 
   public Ranking(Player player, Rank rank, List<Stats> stats) {
     this.player = player;

@@ -1,11 +1,9 @@
 package bg.proxiad.demo.hangman.controller;
 
+import bg.proxiad.demo.hangman.model.PlayerInput;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import bg.proxiad.demo.hangman.service.GameService;
 
 @Controller
@@ -18,13 +16,16 @@ public class GameController {
     this.gameService = gameService;
   }
 
-  @GetMapping("/game/{id}")
+  @GetMapping("/game")
   public String getGame(@PathVariable(name = "id") Long id) {
     gameService.getGame(id);
     return "game";
   }
 
-  @PostMapping("/game/{id}")
-  public void placeChar(
-      @PathVariable(name = "id") String symbol, @RequestParam Character character) {}
+  /*@PostMapping("/game/{id}")
+  public void placeChar(@PathVariable(name = "id") Long gameId, @ModelAttribute PlayerInput playerInput, @RequestParam Long playerId) {
+    gameService.playerTurn(gameId, playerInput);
+
+
+  }*/
 }

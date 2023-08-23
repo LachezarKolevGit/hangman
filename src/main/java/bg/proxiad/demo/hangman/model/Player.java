@@ -2,13 +2,8 @@ package bg.proxiad.demo.hangman.model;
 
 import java.util.HashSet;
 import java.util.Set;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.OneToMany;
-import jakarta.persistence.OneToOne;
+
+import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -26,7 +21,9 @@ public class Player {
 
   private String name;
 
-  @OneToOne(mappedBy = "player")
+  private Integer score;
+
+  @OneToOne(mappedBy = "player", cascade = CascadeType.ALL)
   private Ranking ranking;
 
   @OneToMany(mappedBy = "player")
@@ -34,5 +31,15 @@ public class Player {
 
   public Player(String name) {
     this.name = name;
+    this.score = 0;
+    this.ranking = new Ranking(this, Rank.UNRANKED);
+    this.ranking.setPlayer(this);
+  }
+
+  public Player(String name, Ranking ranking, Integer score) {
+    this.name = name;
+    this.score = score;
+    this.ranking = ranking;
+    ranking.setPlayer(this);
   }
 }
