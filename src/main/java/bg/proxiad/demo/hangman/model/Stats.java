@@ -26,7 +26,7 @@ public class Stats {
   private int livesRemaining;
 
   @ManyToOne
-  @JoinColumn(name = "ranking_id", nullable = false)
+  @JoinColumn(name = "ranking_id")
   private Ranking ranking;
 
   @OneToOne(mappedBy = "stats")
@@ -36,8 +36,7 @@ public class Stats {
   @CollectionTable(name = "input_history")
   List<Character> inputHistory = new ArrayList<>();
 
-  public void addCharacterPlaced(Character characterPlaced){
+  public void addCharacterPlaced(Character characterPlaced) {
     inputHistory.add(characterPlaced);
   }
-
 }

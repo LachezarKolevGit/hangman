@@ -16,16 +16,14 @@ public class GameController {
     this.gameService = gameService;
   }
 
-  @GetMapping("/game")
+  /*@GetMapping("/game/{id}")
   public String getGame(@PathVariable(name = "id") Long id) {
     gameService.getGame(id);
     return "game";
   }
 
-  /*@PostMapping("/game/{id}")
-  public void placeChar(@PathVariable(name = "id") Long gameId, @ModelAttribute PlayerInput playerInput, @RequestParam Long playerId) {
-    gameService.playerTurn(gameId, playerInput);
-
-
+  @PostMapping("/game")
+  public void placeChar(@RequestParam String playerName, @RequestParam String word) {
+    gameService.start(playerName, word);
   }*/
 }

@@ -6,7 +6,7 @@ import bg.proxiad.demo.hangman.model.PlayerInput;
 
 public interface GameService {
 
-  void start(Player player, String word);
+  Long start(Player player, String word);
 
   Game getGame(Long id);
 
@@ -14,7 +14,7 @@ public interface GameService {
 
   void markAsFinished(Long id);
 
-  boolean gameOverCheck(Long id);
+  boolean gameWonCheck(Long id);
 
-  boolean playerTurn(Long gameId, PlayerInput playerInput);
+  boolean gameOverCheck(Long id);
 }

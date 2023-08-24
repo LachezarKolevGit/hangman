@@ -6,12 +6,15 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.hibernate.annotations.Cascade;
+import org.springframework.beans.factory.annotation.Value;
 
 @NoArgsConstructor
 @Getter
 @Setter
 @Entity
 public class Game {
+  public static final Integer STARTING_LIVES = 3;
+
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   @Setter(AccessLevel.NONE)
@@ -38,6 +41,7 @@ public class Game {
     this.word = word;
     this.progress = new boolean[word.length()];
     this.stats = new Stats();
+    stats.setLivesRemaining(STARTING_LIVES);
     stats.setGame(this);
   }
 }

@@ -5,6 +5,9 @@ import bg.proxiad.demo.hangman.model.Stats;
 import bg.proxiad.demo.hangman.repository.StatsRepository;
 
 public interface StatsService {
-    void recordTurn(Long statsId, Integer livesRemaining, Character characterPlaced);
-    Stats getStats(Long id);
+  void recordTurn(Stats stats, Character characterPlaced);
+
+  Stats getStats(Long id);
+
+  Stats decrementLives(Stats stats);
 }

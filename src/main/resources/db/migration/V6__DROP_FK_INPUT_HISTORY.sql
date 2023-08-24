@@ -1,0 +1,1 @@
+ALTER TABLE input_history DROP CONSTRAINT pk_input_history;
