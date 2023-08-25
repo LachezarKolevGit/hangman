@@ -10,7 +10,7 @@ package bg.proxiad.demo.hangman.utils;
       boolean[] settable,
       SharedSessionContractImplementor session)
       throws HibernateException, SQLException {
-    // TODO Auto-generated method stub
+
 
   }
 }*/

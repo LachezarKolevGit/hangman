@@ -7,15 +7,13 @@
 <title>Home</title>
 </head>
 <body>
-<h1>Ranking:</h1>
-
-
+<h1>Ranking all time:</h1>
 <c:forEach items="${playersAllTime}" var="playerAllTime">
 <tr>
     <td>${playerAllTime.name}</td>
 </tr>
 </c:forEach>
-
+<h1>Ranking last month:</h1>
 <c:forEach items="${playersLastMonth}" var="playersLastMonth">
 <tr>
     <td>${playersLastMonth.name}</td>

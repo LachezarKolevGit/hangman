@@ -20,4 +20,6 @@ public interface PlayerService {
   TurnOverview play(Long playerId, Long gameId, PlayerInput playerInput);
 
   Player getPlayerByName(String name);
+
+  void updateRankOnWin(Player player, Long gameId);
 }

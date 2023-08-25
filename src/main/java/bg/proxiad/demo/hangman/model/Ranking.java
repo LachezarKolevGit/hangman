@@ -1,5 +1,6 @@
 package bg.proxiad.demo.hangman.model;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -15,36 +16,47 @@ import lombok.Setter;
 @Setter
 @Entity
 public class Ranking {
-  @Id
-  @GeneratedValue(strategy = GenerationType.IDENTITY)
-  @Setter(AccessLevel.NONE)
-  private Long id;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Setter(AccessLevel.NONE)
+    private Long id;
 
-  @Enumerated(EnumType.STRING)
-  private Rank rank;
+    @Enumerated(EnumType.STRING)
+    private Rank rank;
 
-  @OneToOne
-  @JoinColumn(name = "player_id")
-  private Player player;
+    private Integer score;
 
-  @OneToMany(mappedBy = "ranking")
-  private List<Stats> stats = new ArrayList<>();
+    @Column(name = "last_change")
+    private LocalDate lastChange;
 
-  public Ranking(Rank rank) {
-    this.rank = rank;
-    player = null;
-  }
+    @OneToOne
+    @JoinColumn(name = "player_id")
+    private Player player;
 
-  public Ranking(Player player, Rank rank) {
-    this.player = player;
-    player.setRanking(this);
-    this.rank = rank;
-  }
+    @OneToMany(mappedBy = "ranking")
+    private List<Stats> stats = new ArrayList<>();
 
-  public Ranking(Player player, Rank rank, List<Stats> stats) {
-    this.player = player;
-    player.setRanking(this);
-    this.rank = rank;
-    this.stats = stats;
-  }
+    public Ranking(Player player, Rank rank) {
+        this.player = player;
+        player.setRanking(this);
+        this.rank = rank;
+        this.score = 0;
+    }
+
+    public Ranking(Player player, Rank rank, List<Stats> stats) { //unnecessary
+        this.player = player;
+        player.setRanking(this);
+        this.rank = rank;
+        this.stats = stats;
+        this.score = 0;
+    }
+
+    @Override
+    public String toString() {
+        return "Ranking{" +
+                "id=" + id +
+                ", rank=" + rank +
+                ", score=" + score +
+                ", lastChange=" + lastChange +" }";
+    }
 }

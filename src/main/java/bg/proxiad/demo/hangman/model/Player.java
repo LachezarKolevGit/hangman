@@ -21,8 +21,6 @@ public class Player {
 
   private String name;
 
-  private Integer score;
-
   @OneToOne(mappedBy = "player", cascade = CascadeType.ALL)
   private Ranking ranking;
 
@@ -31,15 +29,15 @@ public class Player {
 
   public Player(String name) {
     this.name = name;
-    this.score = 0;
     this.ranking = new Ranking(this, Rank.UNRANKED);
     this.ranking.setPlayer(this);
+    this.ranking.setScore(0);
   }
 
-  public Player(String name, Ranking ranking, Integer score) {
+  public Player(String name, Ranking ranking) {
     this.name = name;
-    this.score = score;
     this.ranking = ranking;
     ranking.setPlayer(this);
+    this.ranking.setScore(0);
   }
 }

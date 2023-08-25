@@ -58,8 +58,7 @@ public class JpaPlayerDaoIT {
     @Test
     @Transactional
     void testEqualsPersistedRankingWhileIgnoringIdField() {
-        Ranking expectedRanking = new Ranking(Rank.UNRANKED);
-        Player expectedPlayer = new Player("Player1", expectedRanking, 0);
+        Player expectedPlayer = new Player("Player1", new Ranking());
         playerDao.create(expectedPlayer);
 
         Optional<Player> playerOptional = playerDao.get(expectedPlayer.getId());
