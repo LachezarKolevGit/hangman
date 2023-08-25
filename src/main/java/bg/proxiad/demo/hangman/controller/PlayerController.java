@@ -1,5 +1,6 @@
 package bg.proxiad.demo.hangman.controller;
 
+import bg.proxiad.demo.hangman.model.GameCreationRequest;
 import bg.proxiad.demo.hangman.model.PlayerDTO;
 import bg.proxiad.demo.hangman.model.PlayerInput;
 import bg.proxiad.demo.hangman.model.TurnOverview;
@@ -37,18 +38,26 @@ public class PlayerController {
     TurnOverview turnOverview = playerService.play(playerId, gameId, playerInput);
     modelAndView.addObject("turnOverview", turnOverview.toString());
 
+    // playerService.play(playerId, gameId, playerInput) da priema kato parameter nqkakvo property
     return modelAndView;
   }
 
   @GetMapping("/new-game")
-  public String getNewGame() {
+  public String getNewGame(Model model) {
+    model.addAttribute("gameCreationRequest", new GameCreationRequest());
     return "create-game";
   }
 
   @PostMapping("/new-game")
   public String createNewGame(
-      @RequestParam String playerName, @RequestParam String word, Model model) {
-    Long gameId = playerService.startGame(playerName, word);
+      @ModelAttribute GameCreationRequest gameCreationRequest, Model model) {
+    // startGame(new GameCreationBean(, word));
+    // GameCreationRequest kato param na tozi metod
+    // GameCreationBean.playerName   da e s builder
+    // GameCreationBean.word
+    // GameCreationBean.lives
+
+    Long gameId = playerService.startGame(gameCreationBean);
     model.addAttribute("gameId", gameId);
 
     return "game-succesfully-created";
