@@ -30,7 +30,6 @@ public class GenericJpaDao<T> implements Dao<T> {
   }
 
   public void create(T t) {
-    System.out.println("Create");
     if (entityManager == null) {
       System.out.println("Entity manager is null");
       return;

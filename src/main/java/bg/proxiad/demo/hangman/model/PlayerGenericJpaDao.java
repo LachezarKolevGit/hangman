@@ -24,6 +24,19 @@ public class PlayerGenericJpaDao extends GenericJpaDao<Player> {
             .setParameter("name", name)
             .getSingleResult();
     System.out.println(player);
+
+    return Optional.ofNullable(player);
+  }
+
+  public Optional<Player> fetchPlayerCreatedGamesById(Long playerId) {
+    Player player =
+            entityManager
+                    .createQuery(
+                            "SELECT p FROM Player p LEFT JOIN FETCH p.created WHERE p.id=:playerId", Player.class)
+                    .setParameter("playerId", playerId)
+                    .getSingleResult();
+    System.out.println(player);
+
     return Optional.ofNullable(player);
   }
 }

@@ -10,6 +10,5 @@ import lombok.Setter;
 @Getter
 @Setter
 public class PlayerInput {  //check if a record can be used
-    private int position;
     private char character;
 }

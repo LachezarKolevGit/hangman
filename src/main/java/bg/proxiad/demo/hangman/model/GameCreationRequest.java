@@ -6,12 +6,14 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.Optional;
+
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
 @Setter
 public class GameCreationRequest {
 
-  private String playerName;
   private String word;
+  private Integer lives;
 }

@@ -1,0 +1,53 @@
+body {
+    margin: 0;
+}
+
+.container {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: 50px 1fr 1fr 100px;
+    height: 100vh;
+    width: 100vw;
+}
+
+header, main, footer {
+    border: 1px solid black;
+    padding: 10px;
+}
+
+header {
+    background-image: linear-gradient(to right, #007592, #68e0ff);
+    display: flex;
+    grid-column: 1 / 4;
+    justify-content: space-between;
+}
+
+main {
+    align-items: center;
+    border-style: none;
+    grid-row: 2 / 4;
+    grid-column: 1 / 4;
+    display: flex;
+    justify-content: center;
+}
+
+footer {
+    background-color: #008fb3;
+    grid-column: 1 / 4;
+    display: flex;
+    justify-content: center;
+}
+
+.ranking-all-time{
+    min-height: 33vh;
+    width: 33vw;
+}
+
+.ranking-last-month{
+    min-height: 33vh;
+    width: 33vw;
+}
+
+table{
+    font-size: 150%;
+}

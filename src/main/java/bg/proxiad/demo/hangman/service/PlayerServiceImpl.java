@@ -45,9 +45,10 @@ public class PlayerServiceImpl implements PlayerService {
     }
 
     @Override
-    public void create(PlayerDTO playerDTO) {
+    public Player create(PlayerDTO playerDTO) {
         Player player = convertPlayerDto(playerDTO);
         playerDao.create(player);
+        return player;
     }
 
     @Override
@@ -56,21 +57,26 @@ public class PlayerServiceImpl implements PlayerService {
         playerDao.delete(player);
     }
 
-    public void startGame(Long playerId, String word) {
-        Player player = getPlayer(playerId);
-        gameService.start(player, word);
-    }
-
     @Override
-    public Long startGame(String playerName, String word) {
-        Player player = getPlayerByName(playerName);
-        Long gameId = gameService.start(player, word);
-        return gameId;
+    public Game startGame(GameCreationBean gameCreationBean) {
+        Optional<Player> playerOptional = playerDao.fetchPlayerCreatedGamesById(gameCreationBean.getCreator().getId());
+        playerOptional.orElseThrow(() ->
+                new EntityNotFoundException("Entity with id: " + gameCreationBean.getCreator().getId() + "was not found")
+        );
+        gameCreationBean.setCreator(playerOptional.get());
+        Game game = gameService.start(gameCreationBean);
+
+        return game;
     }
 
-    public TurnOverview play(Long playerId, Long gameId, PlayerInput playerInput) {
-        Player player = getPlayer(playerId);
+    /*@Override
+    public Game startGame(GameCreationBean gameCreationBean) {
+        Player player = getPlayerByName(ga);
+        Game game = gameService.start(player, word);
+        return game;
+    }*/
 
+    public TurnOverview play(Player player, Long gameId, PlayerInput playerInput) {
         boolean charPlaced = gameService.placeChar(gameId, playerInput);
         if (charPlaced && gameService.gameWonCheck(gameId)) {
             updateRankOnWin(player, gameId);

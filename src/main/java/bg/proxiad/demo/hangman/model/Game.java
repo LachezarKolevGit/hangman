@@ -8,6 +8,8 @@ import lombok.Setter;
 import org.hibernate.annotations.Cascade;
 import org.springframework.beans.factory.annotation.Value;
 
+import java.time.LocalDateTime;
+
 @NoArgsConstructor
 @Getter
 @Setter
@@ -21,8 +23,12 @@ public class Game {
   private Long id;
 
   @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH})
-  @JoinColumn(name = "player_id")
-  private Player player;
+  @JoinColumn(name = "created_by_player_id")
+  private Player createdBy;
+
+  @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH})
+  @JoinColumn(name = "played_by_player_id")
+  private Player playedBy;
 
   @Enumerated(EnumType.STRING)
   private State state = State.ONGOING;
@@ -35,13 +41,24 @@ public class Game {
 
   private boolean[] progress;
 
-  public Game(Player player, String word) {
-    this.player = player;
-    player.getGames().add(this);
+  @Deprecated
+  public Game(Player createdBy, String word) { //probably will cause an exception
+    this.createdBy = createdBy;
+    createdBy.getCreated().add(this);
     this.word = word;
     this.progress = new boolean[word.length()];
     this.stats = new Stats();
     stats.setLivesRemaining(STARTING_LIVES);
     stats.setGame(this);
+  }
+
+  public Game(GameCreationBean gameCreationBean) {
+    this.createdBy = gameCreationBean.getCreator();
+    this.createdBy.addCreatedGame(this);
+    this.word =gameCreationBean.getWord().toUpperCase();
+    this.progress = new boolean[word.length()];
+    this.progress[0] = true;
+    this.progress[word.length() - 1] = true;
+    this.stats = new Stats(gameCreationBean.getLives(), this, LocalDateTime.now());
   }
 }

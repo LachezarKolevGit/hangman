@@ -22,6 +22,8 @@ public class RankingController {
     List<Player> playersAllTime = rankingService.getTopPlayers();
     List<Player> playersLastMonth = rankingService.getTopPlayersLastMonth();
 
+    String some = (String) model.asMap().get("link");
+    System.out.println("Link is" + some);
     model.addAttribute("playersAllTime", playersAllTime);
     model.addAttribute("playersLastMonth", playersLastMonth);
 

@@ -1,6 +1,9 @@
 package bg.proxiad.demo.hangman.model;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 
 import jakarta.persistence.*;
@@ -22,7 +25,6 @@ public class Stats {
   @Setter(AccessLevel.NONE)
   private Long id;
 
-  @Value("${game.lives-per-game}")
   private int livesRemaining;
 
   @ManyToOne
@@ -32,9 +34,22 @@ public class Stats {
   @OneToOne(mappedBy = "stats")
   private Game game;
 
+  @Column(name =  "created_at")
+  private LocalDateTime createdAt;
+
   @ElementCollection
   @CollectionTable(name = "input_history")
   List<Character> inputHistory = new ArrayList<>();
+
+  public Stats(Integer livesRemaining, Game game, LocalDateTime createdAt){
+    this.livesRemaining = livesRemaining;
+    this.game = game;
+    this.createdAt = createdAt;
+  }
+
+  public List<Character> getInputHistory(){
+     return Collections.unmodifiableList( inputHistory);
+  }
 
   public void addCharacterPlaced(Character characterPlaced) {
     inputHistory.add(characterPlaced);
