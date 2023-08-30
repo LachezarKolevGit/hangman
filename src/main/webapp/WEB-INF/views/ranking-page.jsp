@@ -31,8 +31,8 @@
                 </c:forEach>
             </table>
         </div>
-        <div class="invite-link">Link you were trying to access: <c:out value="${link}"/></div>
-        <br>
+        <%--<div class="invite-link">Link you were trying to access: <c:out value="${link}"/></div>
+        <br>--%>
         <div class="create-game"><a href="${pageContext.request.contextPath}/new-game">Click here to create new game</a>
         </div>
     </main>

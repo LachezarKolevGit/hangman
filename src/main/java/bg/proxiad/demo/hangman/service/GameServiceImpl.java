@@ -100,7 +100,7 @@ public class GameServiceImpl implements GameService {
         Game game = getGame(id);
         Stats stats = game.getStats();
 
-        if (stats.getLivesRemaining() < 0) {
+        if (stats.getLivesRemaining() <= 0) {
             return true;
         }
 
@@ -198,10 +198,10 @@ public class GameServiceImpl implements GameService {
     public void registerSecondPlayer(Long gameId, Player secondPlayer) {
         Game game = getGame(gameId);
         if (game.getCreatedBy().getId().equals(secondPlayer.getId())) {
-            throw new RuntimeException("Game cant be played by the player who created it"); //create custom exception
-        } else if (game.getPlayedBy() != null) {
+            throw new RuntimeException("Game cant be played by the player who created it");
+        } else if (game.getPlayedBy() != null && !secondPlayer.getId().equals(game.getPlayedBy().getId())) {
             throw new RuntimeException("Second player is already registered");
-        } else {
+        } else if (game.getPlayedBy() == null){
             registerPlayer(gameId, secondPlayer);
         }
     }
