@@ -21,7 +21,7 @@
             <br>
         </div>
         <div class=form-footer>
-            <button id="btn-submit" type="submit" value="Submit"></button>
+            <button id="btn-submit" type="submit" value="Submit">Start game</button>
         </div>
     </form:form>
 </div>

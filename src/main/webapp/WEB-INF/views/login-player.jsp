@@ -11,6 +11,7 @@
 
 <div class=form-wrapper>
     <div class="form-header">
+    <h3>Please, login in</h3>
         <c:out value="${errorMessage}"/>
     </div>
     <form:form method="POST"
@@ -22,8 +23,10 @@
             <form:errors path="name" element="div" cssClass="error-div"/>
         </div>
         <div class=form-footer>
-            <button id="btn-submit" type="submit" value="Submit"></button>
+            <button id="btn-submit" type="submit" value="Submit">Login</button>
         </div>
+         <a href="${pageContext.request.contextPath}/register">
+			Click here to register</a>
     </form:form>
 </div>
 </body>

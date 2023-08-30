@@ -10,6 +10,9 @@
 <body>
 
 <div class=form-wrapper>
+<div class="form-header">
+<h2>Register, below</h2>
+</div>
     <form:form method="POST"
                action="${pageContext.request.contextPath}/register"
                modelAttribute="playerDto" cssClass="form">
@@ -19,8 +22,10 @@
             <form:errors path="name" element="div" cssClass="error-div"/>
         </div>
         <div class=form-footer>
-            <button id="btn-submit" type="submit" value="Submit"></button>
+            <button id="btn-submit" type="submit" value="Submit">Register</button>
         </div>
+        <a href="${pageContext.request.contextPath}/login">Click here to login
+			</a>
     </form:form>
 </div>
 </body>

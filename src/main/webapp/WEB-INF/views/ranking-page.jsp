@@ -11,6 +11,7 @@
 <div class="container">
     <header>Hangman game</header>
     <main>
+       <div class="ranking-divs-wrapper">
         <div class="ranking-all-time">
             <table>
                 <th>Players all time ranking</th>
@@ -31,10 +32,9 @@
                 </c:forEach>
             </table>
         </div>
-        <%--<div class="invite-link">Link you were trying to access: <c:out value="${link}"/></div>
-        <br>--%>
-        <div class="create-game"><a href="${pageContext.request.contextPath}/new-game">Click here to create new game</a>
-        </div>
+      </div>
+     <div class="create-game"><a href="${pageContext.request.contextPath}/new-game"><button id=btn-new-game type="button">Click here to create new game</button></a>
+       </div>  
     </main>
     <footer></footer>
 </div>

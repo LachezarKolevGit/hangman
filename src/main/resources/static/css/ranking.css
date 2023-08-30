@@ -19,7 +19,8 @@ header {
     background-image: linear-gradient(to right, #007592, #68e0ff);
     display: flex;
     grid-column: 1 / 4;
-    justify-content: space-between;
+    justify-content: center;
+    font-size: 150%;
 }
 
 main {
@@ -29,6 +30,7 @@ main {
     grid-column: 1 / 4;
     display: flex;
     justify-content: center;
+    flex-direction: column;
 }
 
 footer {
@@ -36,6 +38,13 @@ footer {
     grid-column: 1 / 4;
     display: flex;
     justify-content: center;
+}
+
+.ranking-divs-wrapper{
+	display: flex;
+	flex-direction: row;
+	justify-content: center;
+	align-items: center;
 }
 
 .ranking-all-time{
@@ -50,4 +59,40 @@ footer {
 
 table{
     font-size: 150%;
+    width: 100%
+}
+
+.create-game{
+	margin-top: 100px;
+	height: 50px;
+	width: 150px;
+	text-align: center;
+}
+
+#btn-new-game{
+	  background-color: #68e0ff; 
+  border: none;
+  color: white;
+  padding: 15px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: 4px 2px;
+  cursor: pointer;
+  transition-duration: 0.4s;
+}
+
+#btn-new-game:hover {
+  box-shadow: 0 12px 16px 0 rgba(0,0,0,0.24), 0 17px 50px 0 rgba(0,0,0,0.19);
+}
+
+td{
+	text-align: center;
+	 vertical-align: middle;
+}
+
+th{
+	text-align: center;
+	 vertical-align: middle;
 }
