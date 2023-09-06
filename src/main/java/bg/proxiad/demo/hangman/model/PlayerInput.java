@@ -10,5 +10,6 @@ import lombok.Setter;
 @Getter
 @Setter
 public class PlayerInput {  //check if a record can be used
+    private Long playerId;
     private char character;
 }

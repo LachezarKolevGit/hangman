@@ -37,7 +37,11 @@ public class JpaGameDaoIT {
     void testInsertingGame() {
         Player player = new Player("Player1");
         String expectedWord = "word";
-        Game expectedGame = new Game(player, expectedWord);
+        GameCreationBeanBuilder gameBuilder = new GameCreationBeanBuilder();
+        gameBuilder.creator(player)
+                .lives(3).word(expectedWord);
+        GameCreationBean gameCreationBean = gameBuilder.build();
+        Game expectedGame = new Game(gameCreationBean);
         gameDao.create(expectedGame);
 
         Optional<Game> gameOptional = gameDao.get(expectedGame.getId());

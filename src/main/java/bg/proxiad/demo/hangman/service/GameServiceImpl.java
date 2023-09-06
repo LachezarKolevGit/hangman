@@ -36,7 +36,14 @@ public class GameServiceImpl implements GameService {
     }
 
     @Override
-    public Game start(GameCreationBean gameCreationBean) {
+    public List<Game> getAllGames() {
+        List<Game> list = gameDAO.getAll();
+        System.out.println(gameDAO.getAll());
+        return list;
+    }
+
+    @Override
+    public Game create(GameCreationBean gameCreationBean) {
         Game game = new Game(gameCreationBean); //player join game
         gameCreationBean.getCreator().addCreatedGame(game);
         gameDAO.create(game);
@@ -205,5 +212,6 @@ public class GameServiceImpl implements GameService {
             registerPlayer(gameId, secondPlayer);
         }
     }
+
 }
 

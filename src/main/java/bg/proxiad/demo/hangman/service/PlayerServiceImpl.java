@@ -64,7 +64,7 @@ public class PlayerServiceImpl implements PlayerService {
                 new EntityNotFoundException("Entity with id: " + gameCreationBean.getCreator().getId() + "was not found")
         );
         gameCreationBean.setCreator(playerOptional.get());
-        Game game = gameService.start(gameCreationBean);
+        Game game = gameService.create(gameCreationBean);
 
         return game;
     }
@@ -72,7 +72,7 @@ public class PlayerServiceImpl implements PlayerService {
     /*@Override
     public Game startGame(GameCreationBean gameCreationBean) {
         Player player = getPlayerByName(ga);
-        Game game = gameService.start(player, word);
+        Game game = gameService.create(player, word);
         return game;
     }*/
 

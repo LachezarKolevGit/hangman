@@ -14,6 +14,7 @@ import java.util.Optional;
 @Setter
 public class GameCreationRequest {
 
+  private Long creatorId;
   private String word;
   private Integer lives;
 }

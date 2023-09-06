@@ -10,9 +10,11 @@ import java.util.Map;
 
 public interface GameService {
 
-    Game start(GameCreationBean gamecreationBean);
+    Game create(GameCreationBean gamecreationBean);
 
     Game getGame(Long id);
+
+    List<Game> getAllGames();
 
     boolean placeChar(Long gameId, PlayerInput playerInput);
 

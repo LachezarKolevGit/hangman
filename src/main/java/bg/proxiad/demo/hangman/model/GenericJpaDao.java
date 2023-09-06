@@ -26,7 +26,7 @@ public class GenericJpaDao<T> implements Dao<T> {
 
   @SuppressWarnings("unchecked")
   public List<T> getAll() {
-    return entityManager.createQuery("from " + implementedClass.getName()).getResultList();
+    return entityManager.createQuery("from " + implementedClass.getName()).setMaxResults(10).getResultList();
   }
 
   public void create(T t) {

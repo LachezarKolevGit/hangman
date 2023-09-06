@@ -10,6 +10,6 @@ import lombok.Setter;
 @Setter
 @AllArgsConstructor
 public class PlayerDTO {
-
+  private Long id;
   private String name;
 }
