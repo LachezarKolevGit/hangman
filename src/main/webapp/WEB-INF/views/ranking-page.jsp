@@ -14,7 +14,8 @@
        <div class="ranking-divs-wrapper">
         <div class="ranking-all-time">
             <table>
-                <th>Players all time ranking</th>
+            <tr><th>Players all time ranking</th></tr>
+                
                 <c:forEach items="${playersAllTime}" var="playerAllTime">
                     <tr>
                         <td>${playerAllTime.name}</td>
@@ -24,7 +25,8 @@
         </div>
         <div class="ranking-last-month">
             <table>
-                <th>Players last month ranking</th>
+            <tr>  <th>Players last month ranking</th></tr>
+              
                 <c:forEach items="${playersLastMonth}" var="playersLastMonth">
                     <tr>
                         <td>${playersLastMonth.name}</td>
