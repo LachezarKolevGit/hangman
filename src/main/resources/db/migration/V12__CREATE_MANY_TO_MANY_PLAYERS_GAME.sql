@@ -8,4 +8,3 @@ ALTER TABLE game
 ADD COLUMN played_by BIGINT;
 
 ALTER TABLE game ADD CONSTRAINT fk_playedBy_game FOREIGN KEY (played_by) REFERENCES player(id);
-
