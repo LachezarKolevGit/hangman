@@ -2,12 +2,10 @@ package bg.proxiad.demo.hangman.service;
 
 import bg.proxiad.demo.hangman.model.*;
 import jakarta.persistence.EntityNotFoundException;
-import org.eclipse.tags.shaded.org.apache.bcel.generic.RETURN;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -58,26 +56,23 @@ public class PlayerServiceImpl implements PlayerService {
     }
 
     @Override
+    @Deprecated
     public Game startGame(GameCreationBean gameCreationBean) {
-        Optional<Player> playerOptional = playerDao.fetchPlayerCreatedGamesById(gameCreationBean.getCreator().getId());
+        /*Optional<Player> playerOptional = playerDao.getCreatedGamesByPlayer(gameCreationBean.getCreator().getId());
         playerOptional.orElseThrow(() ->
                 new EntityNotFoundException("Entity with id: " + gameCreationBean.getCreator().getId() + "was not found")
         );
         gameCreationBean.setCreator(playerOptional.get());
-        Game game = gameService.create(gameCreationBean);
+        Game game = gameService.create(gameCreationBean);*/
 
-        return game;
+        return null;
     }
 
-    /*@Override
-    public Game startGame(GameCreationBean gameCreationBean) {
-        Player player = getPlayerByName(ga);
-        Game game = gameService.create(player, word);
-        return game;
-    }*/
+    public TurnOverview play(PlayerInputBean playerInputBean) {
+        Long gameId = playerInputBean.getGameId();
+        Player player = getPlayerByName(playerInputBean.getPlayerName());
 
-    public TurnOverview play(Player player, Long gameId, PlayerInput playerInput) {
-        boolean charPlaced = gameService.placeChar(gameId, playerInput);
+        boolean charPlaced = gameService.placeChar(gameId, playerInputBean);
         if (charPlaced && gameService.gameWonCheck(gameId)) {
             updateRankOnWin(player, gameId);
             gameService.markAsFinished(gameId);
@@ -116,4 +111,5 @@ public class PlayerServiceImpl implements PlayerService {
         stats.setRanking(player.getRanking());
         playerDao.update(player);
     }
+
 }

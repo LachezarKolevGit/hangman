@@ -10,8 +10,8 @@ import lombok.*;
 public class GameDTO {
 
     private Long id;
-    private Long creatorId;
-    private Long playerId;
+    private String creatorName;
+    private String playerName;
     private State state;
     private Long statsId;
     private String word;
@@ -19,11 +19,11 @@ public class GameDTO {
 
     public GameDTO(Game game) {
         this.id = game.getId();
-        this.creatorId = game.getCreatedBy().getId();
+        this.creatorName = game.getCreatedBy().getName();
         if (game.getPlayedBy() != null) {
-            this.playerId = game.getPlayedBy().getId();
+            this.playerName = game.getPlayedBy().getName();
         } else {
-            this.playerId = null;
+            this.playerName = null;
         }
         this.state = game.getState();
         this.statsId = game.getStats().getId();

@@ -65,7 +65,7 @@
                 <c:url var="gameUrl" value="/${game.id}" context="/play"/>
                 <form:form method="POST"
                            action="${gameUrl}"
-                           modelAttribute="playerInput" cssClass="form">
+                           modelAttribute="playerInputBean" cssClass="form">
                     <div class=form-fields>
                         <label>Character</label>
                         <form:input path="character" id="form-input-character"/>

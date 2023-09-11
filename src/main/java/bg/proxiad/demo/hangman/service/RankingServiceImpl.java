@@ -7,11 +7,13 @@ import bg.proxiad.demo.hangman.model.Stats;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 import bg.proxiad.demo.hangman.repository.RankingRepository;
 import bg.proxiad.demo.hangman.repository.RankingSpecification;
 import bg.proxiad.demo.hangman.repository.SearchCriteria;
+import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
@@ -24,88 +26,95 @@ import org.springframework.transaction.annotation.Transactional;
 @Transactional
 public class RankingServiceImpl implements RankingService {
 
-  public static final Integer POINTS_ON_WIN = 3;
+    public static final Integer POINTS_ON_WIN = 3;
 
-  public static final Integer BRONZE_SCORE = 25;
+    public static final Integer BRONZE_SCORE = 25;
 
-  public static final Integer SILVER_SCORE = 50;
+    public static final Integer SILVER_SCORE = 50;
 
-  public static final Integer GOLD_SCORE = 75;
+    public static final Integer GOLD_SCORE = 75;
 
-  private final StatsService statsService;
+    private final StatsService statsService;
 
-  private final RankingRepository rankingRepository;
+    private final RankingRepository rankingRepository;
 
-  @Value("${ranking.service.page-size}")
-  private int pageSize;
+    @Value("${ranking.service.page-size}")
+    private int pageSize;
 
-  @Autowired
-  public RankingServiceImpl(StatsService statsService, RankingRepository rankingRepository) {
-    this.statsService = statsService;
-    this.rankingRepository = rankingRepository;
-  }
-
-  public Ranking evaluateRank(Ranking ranking) {
-    int playerScore = ranking.getScore();
-
-    if (playerScore > GOLD_SCORE) {
-      ranking.setRank(Rank.GOLD);
-    } else if (playerScore > SILVER_SCORE) {
-      ranking.setRank(Rank.SILVER);
-    } else if (playerScore > BRONZE_SCORE) {
-      ranking.setRank(Rank.BRONZE);
+    @Autowired
+    public RankingServiceImpl(StatsService statsService, RankingRepository rankingRepository) {
+        this.statsService = statsService;
+        this.rankingRepository = rankingRepository;
     }
 
-    rankingRepository.save(ranking);
-    return ranking;
-  }
+    public Ranking getPlayerRank(Long playerId) {
+        Optional<Ranking> optionalRanking = rankingRepository.findRankingByPlayerId(playerId);
+        optionalRanking.orElseThrow(() -> new EntityNotFoundException("Ranking was not found based on player id"));
 
-  public Ranking addBonusPoints(Ranking ranking, Stats stats) {
-    int score = ranking.getScore();
-    int livesRemaining = stats.getLivesRemaining();
-    if (livesRemaining > 0) {
-      score += livesRemaining;
-      ranking.setScore(score);
+        return optionalRanking.get();
     }
 
-    rankingRepository.save(ranking);
-    return ranking;
-  }
+    public Ranking evaluateRank(Ranking ranking) {
+        int playerScore = ranking.getScore();
 
-  public Ranking increaseScoreOnWin(Ranking ranking) {
-    int score = ranking.getScore();
-    ranking.setScore(score + POINTS_ON_WIN);
+        if (playerScore > GOLD_SCORE) {
+            ranking.setRank(Rank.GOLD);
+        } else if (playerScore > SILVER_SCORE) {
+            ranking.setRank(Rank.SILVER);
+        } else if (playerScore > BRONZE_SCORE) {
+            ranking.setRank(Rank.BRONZE);
+        }
 
-    rankingRepository.save(ranking);
-    return ranking;
-  }
+        rankingRepository.save(ranking);
+        return ranking;
+    }
 
-  public Ranking updateDate(Ranking ranking) {
-    ranking.setLastChange(LocalDate.now());
-    rankingRepository.save(ranking);
+    public Ranking addBonusPoints(Ranking ranking, Stats stats) {
+        int score = ranking.getScore();
+        int livesRemaining = stats.getLivesRemaining();
+        if (livesRemaining > 0) {
+            score += livesRemaining;
+            ranking.setScore(score);
+        }
 
-    return ranking;
-  }
+        rankingRepository.save(ranking);
+        return ranking;
+    }
 
-  @Override
-  public List<Player> getTopPlayers() {
-    List<Ranking> rankings = rankingRepository.findTop10ByOrderByScoreDesc();
-    List<Player> players = rankings.stream().map(Ranking::getPlayer).collect(Collectors.toList());
+    public Ranking increaseScoreOnWin(Ranking ranking) {
+        int score = ranking.getScore();
+        ranking.setScore(score + POINTS_ON_WIN);
 
-    return players;
-  }
+        rankingRepository.save(ranking);
+        return ranking;
+    }
 
-  @Override
-  public List<Player> getTopPlayersLastMonth() {
-    RankingSpecification spec1 =
-        new RankingSpecification(
-            new SearchCriteria("lastChange", ">", LocalDate.now().minusMonths(1)));
+    public Ranking updateDate(Ranking ranking) {
+        ranking.setLastChange(LocalDate.now());
+        rankingRepository.save(ranking);
 
-    List<Ranking> results = rankingRepository.findAll(Specification.where(spec1));
-    List<Ranking> rankings = rankingRepository.findTop10ByScoreLastMonth();
+        return ranking;
+    }
 
-    List<Player> players = results.stream().map(Ranking::getPlayer).collect(Collectors.toList());
+    @Override
+    public List<Player> getTopPlayers() {
+        List<Ranking> rankings = rankingRepository.findTop10ByOrderByScoreDesc();
+        List<Player> players = rankings.stream().map(Ranking::getPlayer).collect(Collectors.toList());
 
-    return players;
-  }
+        return players;
+    }
+
+    @Override
+    public List<Player> getTopPlayersLastMonth() {
+        RankingSpecification spec1 =
+                new RankingSpecification(
+                        new SearchCriteria("lastChange", ">", LocalDate.now().minusMonths(1)));
+
+        List<Ranking> results = rankingRepository.findAll(Specification.where(spec1));
+        List<Ranking> rankings = rankingRepository.findTop10ByScoreLastMonth();
+
+        List<Player> players = results.stream().map(Ranking::getPlayer).collect(Collectors.toList());
+
+        return players;
+    }
 }

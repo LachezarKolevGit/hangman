@@ -12,11 +12,10 @@ public interface PlayerService {
 
   Game startGame(GameCreationBean gameCreationBean);
 
- // Long startGame(String playerName, String word);
-
-  TurnOverview play(Player player, Long gameId, PlayerInput playerInput);
+  TurnOverview play(PlayerInputBean playerInputBean);
 
   Player getPlayerByName(String name);
 
   void updateRankOnWin(Player player, Long gameId);
+
 }

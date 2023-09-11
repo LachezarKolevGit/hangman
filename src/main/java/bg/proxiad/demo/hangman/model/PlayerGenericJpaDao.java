@@ -1,7 +1,10 @@
 package bg.proxiad.demo.hangman.model;
 
+import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
+
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Repository;
 import jakarta.transaction.Transactional;
@@ -28,15 +31,16 @@ public class PlayerGenericJpaDao extends GenericJpaDao<Player> {
     return Optional.ofNullable(player);
   }
 
-  public Optional<Player> fetchPlayerCreatedGamesById(Long playerId) {
+  /*public Set<Game> getFullyFetchedPlayerByName(String name) {
     Player player =
             entityManager
                     .createQuery(
-                            "SELECT p FROM Player p LEFT JOIN FETCH p.created WHERE p.id=:playerId", Player.class)
+                            "SELECT p FROM Player p LEFT JOIN FETCH p.played WHERE p.id=:playerId", Player.class)
                     .setParameter("playerId", playerId)
                     .getSingleResult();
-    System.out.println(player);
 
-    return Optional.ofNullable(player);
-  }
+
+   return player;
+  }*/
+
 }

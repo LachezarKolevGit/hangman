@@ -13,8 +13,7 @@ import java.util.Optional;
 @Getter
 @Setter
 public class GameCreationRequest {
-
-  private Long creatorId;
+  private String creatorUsername;
   private String word;
   private Integer lives;
 }

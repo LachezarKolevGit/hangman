@@ -4,6 +4,7 @@ import java.util.*;
 
 import bg.proxiad.demo.hangman.exceptions.GameIsFinishedException;
 import bg.proxiad.demo.hangman.model.*;
+import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -13,12 +14,12 @@ import org.springframework.transaction.annotation.Transactional;
 public class GameServiceImpl implements GameService {
 
     private final RankingService rankingService;
-    private final GenericJpaDao<Game> gameDAO;
+    private final GameGenericJpaDao gameDAO;
     private final StatsService statsService;
 
     @Autowired
     public GameServiceImpl(
-            RankingService rankingService, GenericJpaDao<Game> gameDAO, StatsService statsService) {
+            RankingService rankingService, GameGenericJpaDao gameDAO, StatsService statsService) {
         this.rankingService = rankingService;
         this.gameDAO = gameDAO;
         this.statsService = statsService;
@@ -29,9 +30,8 @@ public class GameServiceImpl implements GameService {
     public Game getGame(Long id) {
         Optional<Game> gameOptional = gameDAO.get(id);
         if (gameOptional.isEmpty()) {
-            throw new IllegalArgumentException("Game with that id does not exist");
+            throw new EntityNotFoundException();
         }
-
         return gameOptional.get();
     }
 
@@ -52,7 +52,7 @@ public class GameServiceImpl implements GameService {
     }
 
     @Override
-    public boolean placeChar(Long gameId, PlayerInput playerInput) {
+    public boolean placeChar(Long gameId, PlayerInputBean playerInputBean) {
         Game game = getGame(gameId);
         if (game.getState() == State.FINISHED) {
             throw new GameIsFinishedException("Game with id: " + gameId + " is finished");
@@ -61,11 +61,11 @@ public class GameServiceImpl implements GameService {
         String word = game.getWord();
         boolean[] progress = game.getProgress();
 
-        statsService.recordTurn(game.getStats(), playerInput.getCharacter());
+        statsService.recordTurn(game.getStats(), playerInputBean.getCharacter());
 
         boolean correctGuess = false;
         for (int i = 1; i < progress.length - 1; i++) {
-            if (word.charAt(i) == playerInput.getCharacter()) {
+            if (word.charAt(i) == playerInputBean.getCharacter()) {
                 progress[i] = true;
                 correctGuess = true;
             }
@@ -211,6 +211,14 @@ public class GameServiceImpl implements GameService {
         } else if (game.getPlayedBy() == null){
             registerPlayer(gameId, secondPlayer);
         }
+    }
+
+    public Set<Game> getGamesCreatedByPlayer(Long playerId){
+        return gameDAO.getGamesCreated(playerId);
+    }
+
+    public Set<Game> getGamesPlayedByPlayer(Long playerId){
+        return gameDAO.getGamesPlayed(playerId);
     }
 
 }

@@ -6,6 +6,8 @@ import bg.proxiad.demo.hangman.model.Ranking;
 import bg.proxiad.demo.hangman.model.Stats;
 
 public interface RankingService {
+  Ranking getPlayerRank(Long playerId);
+
   Ranking evaluateRank(Ranking ranking);
 
   Ranking addBonusPoints(Ranking ranking, Stats stats);

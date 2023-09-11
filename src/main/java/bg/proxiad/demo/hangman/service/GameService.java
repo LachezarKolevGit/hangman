@@ -3,10 +3,11 @@ package bg.proxiad.demo.hangman.service;
 import bg.proxiad.demo.hangman.model.Game;
 import bg.proxiad.demo.hangman.model.GameCreationBean;
 import bg.proxiad.demo.hangman.model.Player;
-import bg.proxiad.demo.hangman.model.PlayerInput;
+import bg.proxiad.demo.hangman.model.PlayerInputBean;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 public interface GameService {
 
@@ -16,7 +17,7 @@ public interface GameService {
 
     List<Game> getAllGames();
 
-    boolean placeChar(Long gameId, PlayerInput playerInput);
+    boolean placeChar(Long gameId, PlayerInputBean playerInputBean);
 
     void markAsFinished(Long id);
 
@@ -37,4 +38,8 @@ public interface GameService {
     List<Character> getAllInvalidChars(Long gameId);
 
     void registerSecondPlayer(Long gameId, Player secondPlayer);
+
+    Set<Game> getGamesCreatedByPlayer(Long playerId);
+
+    Set<Game> getGamesPlayedByPlayer(Long playerId);
 }

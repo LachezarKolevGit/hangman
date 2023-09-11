@@ -34,6 +34,6 @@ build/
 
 
 src/main/resources/db/migration/V10__FIX_INSERT_PLAYERS.sql
-src/main/resources/db/migration/V11__INSERT_INTO_RANKING.sql
+src/main/resources/db/migration/V11__CREATE_MANY_TO_MANY_PLAYERS_GAME.sql
 src/main/resources/db/migration/V12__CREATE_MANY_TO_MANY_PLAYERS_GAME.sql
 src/main/resources/db/migration/V13__ALTER_COLUMN_NAMES_GAME.sql
