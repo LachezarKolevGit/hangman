@@ -12,9 +12,9 @@ public interface RankingService {
 
   Ranking addBonusPoints(Ranking ranking, Stats stats);
 
-  List<Player> getTopPlayers();
+  List<Player> getTopPlayers(int pageIndex, int pageSize);
 
-  List<Player> getTopPlayersLastMonth();
+  List<Player> getTopPlayersLastMonth(int pageIndex, int pageSize);
 
   Ranking increaseScoreOnWin(Ranking ranking);
 

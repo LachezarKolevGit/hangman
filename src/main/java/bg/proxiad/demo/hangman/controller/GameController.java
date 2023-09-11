@@ -52,11 +52,12 @@ public class GameController {
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Game successfully created",
                     content = { @Content(mediaType = "application/json",
-                            schema = @Schema(implementation = GameCreationRequest.class)) }),
+                            schema = @Schema(implementation = GameDTO.class)) }),
             @ApiResponse(responseCode = "400", description = "",
                     content = @Content(mediaType = "application/json", schema = @Schema(implementation = Error.class)))})
     @PostMapping("/game")
-    public GameDTO createGame(GameCreationRequest gameCreationRequest) {
+    public GameDTO createGame(@RequestBody GameCreationRequest gameCreationRequest) {
+        System.out.println(gameCreationRequest);
         Player creator = playerService.getPlayerByName(gameCreationRequest.getCreatorUsername());
 
         GameCreationBeanBuilder builder = new GameCreationBeanBuilder();
@@ -74,7 +75,7 @@ public class GameController {
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "List games",
                     content = { @Content(mediaType = "application/json",
-                            array  = @ArraySchema(schema = @Schema(implementation = Game.class))) })})
+                            array  = @ArraySchema(schema = @Schema(implementation = GameDTO.class))) })})
     @GetMapping("/games")
     public List<GameDTO> getGames() {
         return gameService.getAllGames().stream().map(gameMapper::gameToGameDTO).collect(Collectors.toList());

@@ -1,10 +1,7 @@
 package bg.proxiad.demo.hangman.model;
 
+import lombok.*;
 import org.springframework.web.bind.annotation.RequestParam;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
 
 import java.util.Optional;
 
@@ -12,6 +9,7 @@ import java.util.Optional;
 @AllArgsConstructor
 @Getter
 @Setter
+@ToString
 public class GameCreationRequest {
   private String creatorUsername;
   private String word;

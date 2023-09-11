@@ -11,6 +11,5 @@ import lombok.Setter;
 @AllArgsConstructor
 public class PlayerGuessRequest {
     private char character;
-    private Long gameId;
     private String playerName;
 }

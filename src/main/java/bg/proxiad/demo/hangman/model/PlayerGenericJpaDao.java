@@ -31,16 +31,4 @@ public class PlayerGenericJpaDao extends GenericJpaDao<Player> {
     return Optional.ofNullable(player);
   }
 
-  /*public Set<Game> getFullyFetchedPlayerByName(String name) {
-    Player player =
-            entityManager
-                    .createQuery(
-                            "SELECT p FROM Player p LEFT JOIN FETCH p.played WHERE p.id=:playerId", Player.class)
-                    .setParameter("playerId", playerId)
-                    .getSingleResult();
-
-
-   return player;
-  }*/
-
 }

@@ -156,8 +156,6 @@ public class GameServiceImpl implements GameService {
         return Collections.unmodifiableList(guessedChars);
     }
 
-
-
     public Map<Character, Boolean> getAlphabetWithTriedLetters(List<Character> guessedChars) {
         List<Character> alphabet = getAlphabet();
         Map<Character, Boolean> alphabetGuessed = new HashMap<>(alphabet.size());
@@ -220,6 +218,5 @@ public class GameServiceImpl implements GameService {
     public Set<Game> getGamesPlayedByPlayer(Long playerId){
         return gameDAO.getGamesPlayed(playerId);
     }
-
 }
 

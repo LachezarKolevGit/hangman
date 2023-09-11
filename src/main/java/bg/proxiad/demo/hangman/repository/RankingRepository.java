@@ -1,7 +1,7 @@
 package bg.proxiad.demo.hangman.repository;
 
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.data.jpa.repository.Query;
@@ -16,7 +16,7 @@ import java.util.Optional;
 @Repository
 public interface RankingRepository extends JpaRepository<Ranking, Long>, JpaSpecificationExecutor<Ranking> {
 
-    List<Ranking> findTop10ByOrderByScoreDesc();
+    Page<Ranking> findTop10ByOrderByScoreDesc(Pageable pageable);
 
     Optional<Ranking> findRankingByPlayerId(Long playerId);
 

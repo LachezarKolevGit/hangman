@@ -18,6 +18,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -97,21 +98,22 @@ public class RankingServiceImpl implements RankingService {
     }
 
     @Override
-    public List<Player> getTopPlayers() {
-        List<Ranking> rankings = rankingRepository.findTop10ByOrderByScoreDesc();
+    public List<Player> getTopPlayers(int pageIndex, int pageSize) {
+        PageRequest pageRequest = PageRequest.of(pageIndex, pageSize);
+        Page<Ranking> rankings = rankingRepository.findTop10ByOrderByScoreDesc(pageRequest);
         List<Player> players = rankings.stream().map(Ranking::getPlayer).collect(Collectors.toList());
 
         return players;
     }
 
     @Override
-    public List<Player> getTopPlayersLastMonth() {
+    public List<Player> getTopPlayersLastMonth(int pageIndex, int pageSize) {
         RankingSpecification spec1 =
                 new RankingSpecification(
                         new SearchCriteria("lastChange", ">", LocalDate.now().minusMonths(1)));
 
-        List<Ranking> results = rankingRepository.findAll(Specification.where(spec1));
-        List<Ranking> rankings = rankingRepository.findTop10ByScoreLastMonth();
+        PageRequest pageRequest = PageRequest.of(pageIndex, pageSize);
+        Page<Ranking> results = rankingRepository.findAll(Specification.where(spec1), pageRequest);
 
         List<Player> players = results.stream().map(Ranking::getPlayer).collect(Collectors.toList());
 
