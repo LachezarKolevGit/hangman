@@ -3,6 +3,8 @@ package bg.proxiad.demo.hangman.service;
 import java.util.*;
 
 import bg.proxiad.demo.hangman.exceptions.GameIsFinishedException;
+import bg.proxiad.demo.hangman.exceptions.InvalidPlayerException;
+import bg.proxiad.demo.hangman.exceptions.PlayerAlreadyRegisteredException;
 import bg.proxiad.demo.hangman.model.*;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -173,6 +175,7 @@ public class GameServiceImpl implements GameService {
         return Collections.unmodifiableMap(alphabetGuessed);
     }
 
+    @Deprecated
     public void registerPlayer(Long gameId, Player player) {
         Game game = getGame(gameId);
         if (game.getPlayedBy() != null) {
@@ -203,9 +206,9 @@ public class GameServiceImpl implements GameService {
     public void registerSecondPlayer(Long gameId, Player secondPlayer) {
         Game game = getGame(gameId);
         if (game.getCreatedBy().getId().equals(secondPlayer.getId())) {
-            throw new RuntimeException("Game cant be played by the player who created it");
+            throw new InvalidPlayerException("Game cant be played by the player who created it");
         } else if (game.getPlayedBy() != null && !secondPlayer.getId().equals(game.getPlayedBy().getId())) {
-            throw new RuntimeException("Second player is already registered");
+            throw new PlayerAlreadyRegisteredException("Player is already registered");
         } else if (game.getPlayedBy() == null){
             registerPlayer(gameId, secondPlayer);
         }

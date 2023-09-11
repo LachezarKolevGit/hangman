@@ -71,6 +71,7 @@ public class PlayerServiceImpl implements PlayerService {
     public TurnOverview play(PlayerInputBean playerInputBean) {
         Long gameId = playerInputBean.getGameId();
         Player player = getPlayerByName(playerInputBean.getPlayerName());
+        gameService.registerSecondPlayer(gameId, player);
 
         boolean charPlaced = gameService.placeChar(gameId, playerInputBean);
         if (charPlaced && gameService.gameWonCheck(gameId)) {

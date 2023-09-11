@@ -11,5 +11,5 @@ public class ErrorDetail {
     private String field;
     private String value;
     private String issue;
-    private String location; //change to ENUM?
+    private String location;
 }

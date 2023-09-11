@@ -62,7 +62,10 @@ public class PlayerController {
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Player's guess is processed successfully",
                     content = {@Content(mediaType = "application/json",
-                            schema = @Schema(implementation = PlayerDTO.class))})})
+                            schema = @Schema(implementation = TurnResultDetails.class))}),
+            @ApiResponse(responseCode = "400", description = "Player's identity is invalid",
+                    content = {@Content(mediaType = "application/json",
+                            schema = @Schema(implementation = Error.class))})})
     @PostMapping("/{gameId}/play")
     public TurnResultDetails play(@PathVariable Long gameId, @RequestBody PlayerGuessRequest playerGuessRequest) {
         PlayerInputBean playerInputBean = PlayerInputBean.builder()
